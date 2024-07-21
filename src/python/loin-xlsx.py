@@ -1,7 +1,13 @@
+#!/usr/bin/env python
+"""
+Convert an Loin-XML file to an XSD-XML file
+To reproduce the generated XML file, use:
+> python loin-xml-xsdata.py 20240718_IR_Example.xlsx 20240721_loin_from_xlsx.xml
+"""
+
 import argparse
 import pathlib
 import pandas as pd
-import numpy as np
 
 from dataclasses import dataclass
 from typing import List
@@ -13,14 +19,10 @@ from loin.en_17412_3 import (
 )
 from loin.iso_23887 import (
     DataTemplateType,
-    DatatypeType,
-    DatatypeTypeName,
     MultilingualTextType,
-    ScaleType,
     PropertyType,
     ReferenceType,
     UnitType,
-    BaseType,
 )
 from xsdata.formats.dataclass.serializers import XmlSerializer
 from xsdata.formats.dataclass.serializers.config import SerializerConfig
@@ -102,7 +104,8 @@ def default_loader(xls_file: pathlib.Path, *, obj_cols: int = 3,
 
 
 def main():
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument("input", type=pathlib.Path)
     parser.add_argument("output", type=pathlib.Path)
     parser.add_argument("--format", type=str, default="default")
