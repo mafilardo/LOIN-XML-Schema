@@ -39,148 +39,19 @@ from xsdata.models.datatype import XmlDateTime
 # compliant to the schema ISO-7817-3.xsd
 #
 
-# Instantiate the objects of the generated classes
-my_loin = LevelOfInformationNeed()
-my_specification = Specification()
-my_loin.specification.append(my_specification)
-
-# Populate the objects with data
-my_specification.description = "LOIN for Bridge data at handover to client"
-my_specification.name = "Bridge_Handover_to_Client"
-
-#<Prerequisites purpose="Operation and Maintenance" informationDeliveryMilestone="Handover" sendingActor="Contractor" receivingActor="Client"/>
-my_prerequisits = Prerequisites()
-my_prerequisits.purpose = "Operation and Maintenance"
-my_prerequisits.information_delivery_milestone = "Handover"
-my_prerequisits.sending_actor = "Contractor"
-my_prerequisits.receiving_actor = "Client"
-my_specification.prerequisites = my_prerequisits 
-
 # date is reused wherever it is required
 date = XmlDateTime(2024, 6, 14, 10, 17, 3)
 
-specification_for_wingwalls = SpecificationPerObjectType(date=date)
-specification_for_wingwalls.node_id = "6416a407-4de9-4b33-9dfa-0cc04c0825f1"
-my_specification.specification_per_object_type = specification_for_wingwalls
-specification_for_wingwalls.name = "Specification for Wing Wall"
-specification_for_wingwalls.definition = "The lateral wall of a bridge abutment."
-my_reference_document = ReferenceType()
-my_reference_document.resource = "https://identifier.buildingsmart.org/uri/nbs/uniclass2015/1/class/Ss_20_50_10_95"
-my_reference_document.node_id = "68ed2017-5370-48e4-a3bc-10f9833051df"
-specification_for_wingwalls.reference_document = my_reference_document 
+# Instantiate the objects of the generated classes
+my_loin = LevelOfInformationNeed()
 
-my_object_ref = ReferenceType(node_id= "2c9cf451-6070-42dc-bbc8-a71494be6476")
-specification_for_wingwalls.object_value = my_object_ref
+my_specification = Specification()
+my_specification.description = "LOIN for Bridge data at handover to client"
+my_specification.name = "Bridge_Handover_to_Client"
 
-my_set_of_properties = ReferenceType(node_id= "19f434c3-634d-4fcc-ba62-04106efb8eef")
-specification_for_wingwalls.set_of_properties= my_set_of_properties
+my_loin.specification.append(my_specification)
 
-#<RequiredDocument type="Technical Drawing" purpose="Archive" content="Horizontal Projection"/>
-
-my_documentation = Documentation()
-my_documentation.node_id ="2bb0f705-a43c-4adf-85ae-3c2f73ea40b7"
-my_required_document = RequiredDocument()
-my_documentation.required_document = my_required_document
-my_required_document.type_value="Technical Drawing"
-my_required_document.purpose="Archive"
-my_required_document.content="Horizontal Projection"
-specification_for_wingwalls.documentation = my_documentation
-
-my_geometrical_information = GeometricalInformation()
-my_geometrical_information.node_id = "6775dba3-5a29-4cba-b15f-3b1c3b362ec1"
-my_geometrical_information.detail = DetailEnum("L4")
-my_geometrical_information.dimensionality = DimensionalityEnum("D0")
-my_geometrical_information.location = LocationEnum("Relative")
-my_geometrical_information.appearance = AppearanceEnum("Textures")
-my_geometrical_information.parametric_behaviour = ParametricBehaviourEnum("ConstructiveGeometry")
-specification_for_wingwalls.geometrical_information = my_geometrical_information
-
-#Here we define our Object Types and add them to the LOIN specification
-my_object_type = ObjectType()
-my_loin.object_types = LevelOfInformationNeed.ObjectTypes()
-my_loin.object_types.object_type.append(my_object_type)
-
-my_object_type.node_id = "2c9cf451-6070-42dc-bbc8-a71494be6476"
-my_object_type.date = date
-# my_object_type.node_id = "3b7802f6-b9a2-4062-ab23-69fa92c4984f"
-my_object_type.name = MultilingualTextType("Wing Wall", "en")
-my_object_type.definition = MultilingualTextType("The lateral wall of a bridge abutment.", "en")
-#my_object_type.name.append(MultilingualTextType("Flügelmauer", "de"))
-
-#Here we define our AlphanumericInformation and add it to the LOIN specification
-my_alphanumerical_information = LevelOfInformationNeed.AlphanumericalInformation()
-my_loin.alphanumerical_information.append(my_alphanumerical_information);
-
-width_property = PropertyType(date=date)
-my_alphanumerical_information.property.append(width_property)
-length_property = PropertyType(date=date)
-my_alphanumerical_information.property.append(length_property)
-
-# Lenght property
-# <Property nodeID="bc175904-b312-4caa-8b8a-5b130c239673" about="https://datadictionay1.org/75cceb1c-1c7a-44aa-8a75-c3a953e9068b" date="2022-05-02T09:21:20+01:00">
-#      <dt:Name xml:lang="en">Length</dt:Name>
-#      <dt:Definition xml:lang="en">Length according to ISO XXX-YYY</dt:Definition>
-#      <dt:DataType name="REAL"/>
-#      <dt:Unit resource="https://datadictionary2.org/cm" />
-#      <dt:PhysicalQuantity resource="https://datadictionary3.org/length" />
-#    </Property>
-
-length_property.node_id = "bc175904-b312-4caa-8b8a-5b130c239673"
-length_property.name.append(MultilingualTextType("Length", "en"))
-length_property.definition = MultilingualTextType("Length according to ISO XXX-YYY", "en")
-length_property.data_type = DatatypeType()
-length_property.data_type.name = DatatypeTypeName.REAL
-length_property.unit.append(ReferenceType(resource="https://datadictionary2.org/cm"))
-length_property_ref = ReferenceType(node_id=length_property.node_id)
-
-
-# <Property nodeID="b0b4e8cc-452a-4c47-9043-d90ec5f4bfc3" date="2022-05-02T09:21:20+01:00">
-#      <dt:Name xml:lang="en">Width</dt:Name>
-#      <dt:Definition xml:lang="en">Width according to ISO XXX-YYY</dt:Definition>
-#      <dt:DataType name="REAL">
-#        <dt:MinExclusive value="0"/>
-#      </dt:DataType>
-#      <dt:Unit nodeID="576c3391-b3a7-4c33-a4e3-2b503726f441"/>
-#      <dt:PhysicalQuantity nodeID="a0b4e8cc-452a-4c47-9043-d90ec5f4bfc3"/>
-#    </Property>
-
-width_property.node_id = "8ef0be47-929f-428a-9016-ec1e1f1f7616"
-width_property.name.append(MultilingualTextType("Width", "en"))
-width_property.definition = MultilingualTextType("Width according to ISO XXX-YYY", "en")
-width_property.data_type = DatatypeType()
-width_property.data_type.name = DatatypeTypeName.REAL
-width_property.unit.append(ReferenceType(node_id="576c3391-b3a7-4c33-a4e3-2b503726f441"))
-width_property.physical_quantity = ReferenceType(node_id="a0b4e8cc-452a-4c47-9043-d90ec5f4bfc3")
-width_property_ref = ReferenceType(node_id=width_property.node_id)
-
-#<PhysicalQuantity nodeID="a0b4e8cc-452a-4c47-9043-d90ec5f4bfc3" date="2022-05-02T09:21:20+01:00">
-#      <dt:Name xml:lang="en">Length</dt:Name>
-#      <dt:Definition xml:lang="en">Definition of length physical quantity</dt:Definition>
-#      <dt:Dimensions nodeID="476c3391-b3a7-4c33-a4e3-2b503726f441"/>
-#    </PhysicalQuantity>
-
-my_physical_quantity = PhysicalQuantityType(date=date)
-my_physical_quantity.node_id = "a0b4e8cc-452a-4c47-9043-d90ec5f4bfc3"
-my_alphanumerical_information.physical_quantity.append(my_physical_quantity)
-my_physical_quantity.name = MultilingualTextType("Length","en")
-my_physical_quantity.definition = MultilingualTextType("Definition of length physical quantity","en")
-my_physical_quantity.dimensions = ReferenceType(node_id="476c3391-b3a7-4c33-a4e3-2b503726f441")
-
-#<SetOfProperties nodeID="19f434c3-634d-4fcc-ba62-04106efb8eef" date="2022-05-02T09:21:20+01:00">
-#      <dt:Name xml:lang="en">Dimensions</dt:Name>
-#      <dt:Definition xml:lang="en">Definition of the dimensions set of properties</dt:Definition>
-#      <dt:Property nodeID="bc175904-b312-4caa-8b8a-5b130c239673"/>
-#      <dt:Property nodeID="b0b4e8cc-452a-4c47-9043-d90ec5f4bfc3"/>
-#    </SetOfProperties>
-
-set_of_properties = GroupOfPropertiesType(date=date)
-set_of_properties.node_id = "19f434c3-634d-4fcc-ba62-04106efb8eef"
-my_alphanumerical_information.set_of_properties = set_of_properties
-set_of_properties.name = MultilingualTextType("Dimensions","en")
-set_of_properties.definition = MultilingualTextType("Definition of the dimensions set of properties", "en")
-set_of_properties.property.append (width_property_ref)
-set_of_properties.property.append (length_property_ref)
-
+# create dimensions and units
 #<Dimension nodeID="476c3391-b3a7-4c33-a4e3-2b503726f441" date="2022-05-02T09:21:20+01:00" >
 #      <dt:Name xml:lang="en">Length Dimensions</dt:Name>
 #      <dt:DimensionExponentForAmountOfSubstance>0</dt:DimensionExponentForAmountOfSubstance>
@@ -193,9 +64,8 @@ set_of_properties.property.append (length_property_ref)
 #    </Dimension>
 my_dimension = DimensionType(date=date)
 my_dimension.node_id = "476c3391-b3a7-4c33-a4e3-2b503726f441"
-my_alphanumerical_information.dimension.append(my_dimension)
-my_dimension.name = MultilingualTextType("Lenght Dimensions","en")
-my_dimension.dimension_exponent_for_amount_of_substance =0
+my_dimension.name.append(MultilingualTextType("Lenght Dimensions", "en"))
+my_dimension.dimension_exponent_for_amount_of_substance = 0
 my_dimension.dimension_exponent_for_electric_current = 0
 my_dimension.dimension_exponent_for_length = 1
 my_dimension.dimension_exponent_for_luminous_intensity = 0
@@ -215,11 +85,10 @@ my_dimension_ref = ReferenceType(node_id=my_dimension.node_id)
 #      <dt:Offset>0</dt:Offset>
 #    </Unit>
 centimeter_unit = UnitType(date=date)
-my_alphanumerical_information.unit.append(centimeter_unit)
 centimeter_unit.node_id = "576c3391-b3a7-4c33-a4e3-2b503726f441"
-centimeter_unit.name = MultilingualTextType("Centimeter", "en")
-centimeter_unit.definition = MultilingualTextType("Centimeter according to ISO 80000", "en")
-centimeter_unit.symbol="cm"
+centimeter_unit.name.append(MultilingualTextType("Centimeter", "en"))
+centimeter_unit.definition.append(MultilingualTextType("Centimeter according to ISO 80000", "en"))
+centimeter_unit.symbol.append(MultilingualTextType("cm", "en"))
 centimeter_unit.dimension = my_dimension_ref
 centimeter_unit.scale = ScaleType.LINEAR
 centimeter_unit.base = BaseType.TEN
@@ -227,13 +96,150 @@ centimeter_unit.coefficient = 100
 centimeter_unit.offset = 0
 centimeter_unit_ref = ReferenceType(node_id=centimeter_unit.node_id)
 
-# a dictionary for the namespaces
+#<PhysicalQuantity nodeID="a0b4e8cc-452a-4c47-9043-d90ec5f4bfc3" date="2022-05-02T09:21:20+01:00">
+#      <dt:Name xml:lang="en">Length</dt:Name>
+#      <dt:Definition xml:lang="en">Definition of length physical quantity</dt:Definition>
+#      <dt:Dimensions nodeID="476c3391-b3a7-4c33-a4e3-2b503726f441"/>
+#    </PhysicalQuantity>
+my_physical_quantity = PhysicalQuantityType(date=date)
+my_physical_quantity.node_id = "a0b4e8cc-452a-4c47-9043-d90ec5f4bfc3"
+my_physical_quantity.name.append(MultilingualTextType("Length", "en"))
+my_physical_quantity.definition.append(MultilingualTextType("Definition of length physical quantity", "en"))
+my_physical_quantity.dimensions = my_dimension_ref
+my_physical_quantity_ref = ReferenceType(node_id=my_physical_quantity.node_id)
+
+# Create a Property Set
+# Lenght property
+# <Property nodeID="bc175904-b312-4caa-8b8a-5b130c239673" about="https://datadictionay1.org/75cceb1c-1c7a-44aa-8a75-c3a953e9068b" date="2022-05-02T09:21:20+01:00">
+#      <dt:Name xml:lang="en">Length</dt:Name>
+#      <dt:Definition xml:lang="en">Length according to ISO XXX-YYY</dt:Definition>
+#      <dt:DataType name="REAL"/>
+#      <dt:Unit resource="https://datadictionary2.org/cm" />
+#      <dt:PhysicalQuantity resource="https://datadictionary3.org/length" />
+#    </Property>
+length_property = PropertyType(date=date)
+length_property.node_id = "bc175904-b312-4caa-8b8a-5b130c239673"
+length_property.name.append(MultilingualTextType("Length", "en"))
+length_property.definition.append(MultilingualTextType("Length according to ISO XXX-YYY", "en"))
+length_property.data_type = DatatypeType()
+length_property.data_type.name = DatatypeTypeName.REAL
+length_property.unit.append(ReferenceType(resource="https://datadictionary2.org/cm"))
+length_property.physical_quantity = my_physical_quantity_ref
+length_property_ref = ReferenceType(node_id=length_property.node_id)
+
+
+# <Property nodeID="b0b4e8cc-452a-4c47-9043-d90ec5f4bfc3" date="2022-05-02T09:21:20+01:00">
+#      <dt:Name xml:lang="en">Width</dt:Name>
+#      <dt:Definition xml:lang="en">Width according to ISO XXX-YYY</dt:Definition>
+#      <dt:DataType name="REAL">
+#        <dt:MinExclusive value="0"/>
+#      </dt:DataType>
+#      <dt:Unit nodeID="576c3391-b3a7-4c33-a4e3-2b503726f441"/>
+#      <dt:PhysicalQuantity nodeID="a0b4e8cc-452a-4c47-9043-d90ec5f4bfc3"/>
+#    </Property>
+width_property = PropertyType(date=date)
+width_property.node_id = "8ef0be47-929f-428a-9016-ec1e1f1f7616"
+width_property.name.append(MultilingualTextType("Width", "en"))
+width_property.definition.append(MultilingualTextType("Width according to ISO XXX-YYY", "en"))
+width_property.data_type = DatatypeType()
+width_property.data_type.name = DatatypeTypeName.REAL
+width_property.unit.append(centimeter_unit_ref)
+width_property.physical_quantity = my_physical_quantity_ref
+width_property_ref = ReferenceType(node_id=width_property.node_id)
+
+
+#<SetOfProperties nodeID="19f434c3-634d-4fcc-ba62-04106efb8eef" date="2022-05-02T09:21:20+01:00">
+#      <dt:Name xml:lang="en">Dimensions</dt:Name>
+#      <dt:Definition xml:lang="en">Definition of the dimensions set of properties</dt:Definition>
+#      <dt:Property nodeID="bc175904-b312-4caa-8b8a-5b130c239673"/>
+#      <dt:Property nodeID="b0b4e8cc-452a-4c47-9043-d90ec5f4bfc3"/>
+#    </SetOfProperties>
+set_of_properties = GroupOfPropertiesType(date=date)
+set_of_properties.node_id = "19f434c3-634d-4fcc-ba62-04106efb8eef"
+set_of_properties.name.append(MultilingualTextType("Dimensions", "en"))
+set_of_properties.definition.append(MultilingualTextType("Definition of the dimensions set of properties", "en"))
+set_of_properties.property.append(width_property_ref)
+set_of_properties.property.append(length_property_ref)
+set_of_properties_ref = ReferenceType(node_id=set_of_properties.node_id)
+
+
+# Here we define our Object Types and add them to the LOIN specification
+my_object_type = ObjectType()
+my_object_type.node_id = "2c9cf451-6070-42dc-bbc8-a71494be6476"
+my_object_type.date = date
+my_object_type.name.append(MultilingualTextType("Wing Wall", "en"))
+my_object_type.name.append(MultilingualTextType("Flügelmauer", "de"))
+my_object_type.definition.append(MultilingualTextType("The lateral wall of a bridge abutment.", "en"))
+
+my_loin.object_types = LevelOfInformationNeed.ObjectTypes()
+my_loin.object_types.object_type.append(my_object_type)
+
+#<Prerequisites purpose="Operation and Maintenance" informationDeliveryMilestone="Handover" sendingActor="Contractor" receivingActor="Client"/>
+my_prerequisits = Prerequisites()
+my_prerequisits.purpose = "Operation and Maintenance"
+my_prerequisits.information_delivery_milestone = "Handover"
+my_prerequisits.sending_actor = "Contractor"
+my_prerequisits.receiving_actor = "Client"
+my_specification.prerequisites = my_prerequisits
+
+specification_for_wingwalls = SpecificationPerObjectType(date=date)
+specification_for_wingwalls.node_id = "6416a407-4de9-4b33-9dfa-0cc04c0825f1"
+specification_for_wingwalls.name.append(MultilingualTextType("Specification for Wing Wall", "en"))
+specification_for_wingwalls.definition.append(MultilingualTextType("The lateral wall of a bridge abutment.", "en"))
+
+my_specification.specification_per_object_type.append(specification_for_wingwalls)
+
+my_reference_document = ReferenceType()
+my_reference_document.resource = "https://identifier.buildingsmart.org/uri/nbs/uniclass2015/1/class/Ss_20_50_10_95"
+my_reference_document.node_id = "68ed2017-5370-48e4-a3bc-10f9833051df"
+specification_for_wingwalls.reference_document.append(my_reference_document)
+
+my_object_ref = ReferenceType(node_id=my_object_type.node_id)
+specification_for_wingwalls.object_value.append(my_object_ref)
+
+specification_for_wingwalls.set_of_properties.append(set_of_properties_ref)
+
+#<RequiredDocument type="Technical Drawing" purpose="Archive" content="Horizontal Projection"/>
+my_documentation = Documentation()
+my_documentation.node_id = "2bb0f705-a43c-4adf-85ae-3c2f73ea40b7"
+
+my_required_document = RequiredDocument()
+my_required_document.type_value = "Technical Drawing"
+my_required_document.purpose = "Archive"
+my_required_document.content = "Horizontal Projection"
+my_documentation.required_document.append(my_required_document)
+
+specification_for_wingwalls.documentation = my_documentation
+
+my_geometrical_information = GeometricalInformation()
+my_geometrical_information.node_id = "6775dba3-5a29-4cba-b15f-3b1c3b362ec1"
+my_geometrical_information.detail = DetailEnum("L4")
+my_geometrical_information.dimensionality = DimensionalityEnum("D0")
+my_geometrical_information.location = LocationEnum("Relative")
+my_geometrical_information.appearance = AppearanceEnum("Textures")
+my_geometrical_information.parametric_behaviour = ParametricBehaviourEnum("ConstructiveGeometry")
+specification_for_wingwalls.geometrical_information = my_geometrical_information
+
+
+# Here we define our AlphanumericInformation and add it to the LOIN specification
+my_alphanumerical_information = LevelOfInformationNeed.AlphanumericalInformation()
+my_loin.alphanumerical_information.append(my_alphanumerical_information)
+
+my_alphanumerical_information.physical_quantity.append(my_physical_quantity)
+my_alphanumerical_information.dimension.append(my_dimension)
+my_alphanumerical_information.unit.append(centimeter_unit)
+
+my_alphanumerical_information.set_of_properties.append(set_of_properties)
+my_alphanumerical_information.property.append(width_property)
+my_alphanumerical_information.property.append(length_property)
+
+
+# a dictionary for the global namespaces
 namespaces = {
   "xml" : "http://www.w3.org/XML/1998/namespace",
   "loin" : "https://iso.org/2024/LOIN",
   "dt": "http://tempuri.org/XMLSchema.xsd"
 }
-
 # Create a SerializerConfig with custom settings
 serializer_config = SerializerConfig(
     # Enable pretty-printing (adds line breaks and indentation)

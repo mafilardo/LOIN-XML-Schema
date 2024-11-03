@@ -4,8 +4,8 @@
         <Description>LOIN for Bridge data at handover to client</Description>
         <Prerequisites purpose="Operation and Maintenance" informationDeliveryMilestone="Handover" sendingActor="Contractor" receivingActor="Client"/>
         <SpecificationPerObjectType nodeID="6416a407-4de9-4b33-9dfa-0cc04c0825f1" date="2024-06-14T10:17:03">
-            <dt:Name>Specification for Wing Wall</dt:Name>
-            <dt:Definition>The lateral wall of a bridge abutment.</dt:Definition>
+            <dt:Name xml:lang="en">Specification for Wing Wall</dt:Name>
+            <dt:Definition xml:lang="en">The lateral wall of a bridge abutment.</dt:Definition>
             <dt:ReferenceDocument resource="https://identifier.buildingsmart.org/uri/nbs/uniclass2015/1/class/Ss_20_50_10_95" nodeID="68ed2017-5370-48e4-a3bc-10f9833051df"/>
             <dt:Object nodeID="2c9cf451-6070-42dc-bbc8-a71494be6476"/>
             <dt:SetOfProperties nodeID="19f434c3-634d-4fcc-ba62-04106efb8eef"/>
@@ -24,6 +24,7 @@
     <ObjectTypes>
         <ObjectType nodeID="2c9cf451-6070-42dc-bbc8-a71494be6476" date="2024-06-14T10:17:03">
             <dt:Name xml:lang="en">Wing Wall</dt:Name>
+            <dt:Name xml:lang="de">Flügelmauer</dt:Name>
             <dt:Definition xml:lang="en">The lateral wall of a bridge abutment.</dt:Definition>
         </ObjectType>
     </ObjectTypes>
@@ -40,6 +41,7 @@
             <dt:Definition xml:lang="en">Length according to ISO XXX-YYY</dt:Definition>
             <dt:DataType name="REAL"/>
             <dt:Unit resource="https://datadictionary2.org/cm"/>
+            <dt:PhysicalQuantity nodeID="a0b4e8cc-452a-4c47-9043-d90ec5f4bfc3"/>
         </Property>
         <PhysicalQuantity nodeID="a0b4e8cc-452a-4c47-9043-d90ec5f4bfc3" date="2024-06-14T10:17:03">
             <dt:Name xml:lang="en">Length</dt:Name>
@@ -65,7 +67,7 @@
         <Unit nodeID="576c3391-b3a7-4c33-a4e3-2b503726f441" date="2024-06-14T10:17:03">
             <dt:Name xml:lang="en">Centimeter</dt:Name>
             <dt:Definition xml:lang="en">Centimeter according to ISO 80000</dt:Definition>
-            <dt:Symbol>cm</dt:Symbol>
+            <dt:Symbol xml:lang="en">cm</dt:Symbol>
             <dt:Dimension nodeID="476c3391-b3a7-4c33-a4e3-2b503726f441"/>
             <dt:Scale>LINEAR</dt:Scale>
             <dt:Base>TEN</dt:Base>
